@@ -5,10 +5,10 @@
  floatFormatIn: .string "%lf"
  doubleFormatIn: .string "%lf"
 
- shortFormatOut: .string "%hd\n"
+ shortFormatOut: .string "\n%hd\n"
  intFormatOut: .string "%d\n"
  longFormatOut: .string "%lld\n"
- floatFormatOut: .string "%lf\n"
+ floatFormatOut: .string "%f\n"
  doubleFormatOut: .string "%lf\n"
 
 .text
