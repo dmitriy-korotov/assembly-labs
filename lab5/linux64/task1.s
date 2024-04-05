@@ -3,14 +3,16 @@
   .string "PIN-22 team-3 Krinitskiy Alexander, Korotov Dmitriy\n"
 
 .text
-.globl _main
+.globl main
 
-_main:
- sub $12, %esp
- pushl $msg
+main:
+ sub $8, %rsp
 
- call _puts
- add $4, %esp
- add $12, %esp
+ lea msg(%rip), %rdi      # address of msg -> %rdi
+ xor %al, %al             # %al=0 (there is no variable %xmm parameters)
+
+ call puts
+
+ add $8, %rsp
  xor %eax, %eax
  ret
