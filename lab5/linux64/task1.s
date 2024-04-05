@@ -1,6 +1,6 @@
 .data
  msg:
-  .string "PIN-22 team-3 Krinitskiy Alexander, Korotov Dmitriy\n"
+  .string "PIN-22 team-geys Krinitskiy Alexander, Korotov Dmitriy\n"
 
 .text
 .globl main
