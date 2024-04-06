@@ -1,2 +1,3 @@
-gcc task2.s
-./a.out
+if gcc task2.s; then
+    ./a.out
+fi
