@@ -2,7 +2,7 @@
  shortFormatIn: .string "%hd"
  intFormatIn: .string "%d"
  longFormatIn: .string "%lld"
- floatFormatIn: .string "%lf"
+ floatFormatIn: .string "%f"
  doubleFormatIn: .string "%lf"
 
  shortFormatOut: .string "\n%hd\n"
@@ -16,7 +16,7 @@
 
 main:
  sub $8, %rsp
- sub $64, %rsp
+ sub $32, %rsp
 
  lea shortFormatIn(%rip), %rdi
  lea (%rsp), %rsi
@@ -63,6 +63,7 @@ main:
 
  lea floatFormatOut(%rip), %rdi
  movsd 24(%rsp), %xmm0
+ cvtps2pd %xmm0, %xmm0
  mov $1, %al
  call printf
 
@@ -71,6 +72,6 @@ main:
  mov $1, %al
  call printf
 
- add $72, %rsp
+ add $40, %rsp
  xor %eax, %eax
  ret

@@ -29,23 +29,23 @@ void movLongLongByIndex(long long* dest, int idx) {
 }
 
 void movLongLongTask2(long long* arr, size_t idx) {
-    asm ("movq $-1, (%[start], %[offset], 8)"::[start]"r"(arr),[offset]"r"(idx));
+    asm ("movq $-1, (%[start], %[offset], 8)"::[start]"r"(arr),[offset]"r"(idx):"memory");
 }
 
 void movTask3(long long* arr, size_t idx) {
-    asm ("movb $0xBB, (%[start], %[offset], 1)"::[start]"r"(arr),[offset]"r"(idx));
+    asm ("movb $0xBB, (%[start], %[offset], 1)"::[start]"r"(arr),[offset]"r"(idx):"memory");
 }
 
-void movTask4(long long* arr, size_t idx, long long* value) {
+void movTask4(long long* arr, size_t idx, long long value) {
     long long tmp;
-    asm ("movq (%[source]), %[dest]":[dest]"=r"(tmp):[source]"r"(value));
-    asm ("movq %2, (%0, %1, 8)"::"r"(arr),"r"(idx),"r"(tmp));
+    asm ("movq %[source], %[dest]":[dest]"=r"(tmp):[source]"m"(value));
+    asm ("movq %2, (%0, %1, 8)"::"r"(arr),"r"(idx),"r"(tmp):"memory");
 }
 
 void movTask5(long long* arr, size_t idx, long long* value) {
     long long tmp;
     asm ("movq %1, %0":"=r"(tmp):"r"(value));
-    asm ("movq %2, (%0, %1, 8)"::"r"(arr),"r"(idx),"r"(tmp));
+    asm ("movq %2, (%0, %1, 8)"::"r"(arr),"r"(idx),"r"(tmp):"memory");
 }
 
 void movTask6(long long& z, long long& w, long long x, long long y) {
@@ -62,12 +62,12 @@ void movTask7(double* arr, double x, size_t i) {
     std::cout << "AVX: " << std::boolalpha << AVX_bit << std::endl;
     
     asm ("vmovsd %0, %%xmm2"::"Xm"(x):"%xmm2");
-    asm ("vmovsd %%xmm2, (%0, %1, 8)"::"r"(arr),"X"(i));
+    asm ("vmovsd %%xmm2, (%0, %1, 8)"::"r"(arr),"r"(i):"memory");
 }
 
 void movTask8(double* arr, long long x, size_t i) {
     asm ("vcvtsi2sd %0, %%xmm1, %%xmm2"::"rm"(x):"%xmm1","%xmm2");
-    asm ("vmovsd %%xmm2, (%0, %1, 8)"::"r"(arr),"rm"(i));
+    asm ("vmovsd %%xmm2, (%0, %1, 8)"::"r"(arr),"r"(i):"memory");
 }
 
 
@@ -125,7 +125,7 @@ int main(int _argc, char* _argv[])
     printArray(Mq, N, "Mq");
 
     long long* value = new long long(5ll);
-    movTask4(Mq, 4, value);
+    movTask4(Mq, 4, *value);
 
     std::cout << "\nAfter:" << std::endl;
     printArray(Mq, N, "Mq");
